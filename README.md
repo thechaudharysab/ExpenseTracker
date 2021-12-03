@@ -36,6 +36,9 @@ For the API side I have implemented three GET, POST, and DELETE. But I wanted to
 
 ![step 1](https://raw.githubusercontent.com/thechaudharysab/ExpenseTracker/main/readme-assets/apis.png)
 
+#### Happy Case
+If you want to run the happy case scenario, run the app on iOS at this stage.
+
 ## How to run the App
 
 After you clone the project and open the project folder, you'll have see two folders:
