@@ -27,9 +27,9 @@ function App(props) {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} options={defaultNavOptios} />
         <Stack.Screen name="Dashboard" component={Dashboard} options={defaultNavOptios} />
         <Stack.Screen name="Add Edit Transaction" component={AddEditTransaction} options={defaultNavOptios} />
-        <Stack.Screen name="Login" component={Login} options={defaultNavOptios} />
       </Stack.Navigator>
     </NavigationContainer>
   );
