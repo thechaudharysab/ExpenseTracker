@@ -32,7 +32,7 @@ As the timeline was limited so I tried to cover as much as possible. I have inst
 
 I have't used Redux or [Context API](https://ibjects.medium.com/the-simplest-implementation-of-context-api-in-react-native-94f749187873) as the app structure doesn't required as this is a small app and maybe in futurre if I work on it then I'll use.
 
-For the API side I have implemented three GET, POST, and DELETE. But I wanted to implelemt all these APIs that I have created using LoopBack (A node module) but the implemented ones show that all of these APIs can be implemented in the same manner as I did the others. If you want to see the full list of APIs you can goto http://localhost:3000/explorer/ after you run the server it'll show you something similar to the screenshot below:
+For the API side I have implemented three GET, POST, and DELETE. But I wanted to implelemt all these APIs that I have created using [LoopBack](http://loopback.io) (A node module) but the implemented ones show that all of these APIs can be implemented in the same manner as I did the others. If you want to see the full list of APIs you can goto http://localhost:3000/explorer/ after you run the server it'll show you something similar to the screenshot below:
 
 ![step 1](https://raw.githubusercontent.com/thechaudharysab/ExpenseTracker/main/readme-assets/apis.png)
 
