@@ -11,7 +11,7 @@ function TransactionCell({ transactionType, transactionAmount, transactionTitle,
             <Text style={styles.transactionTitleText}>{transactionTitle}</Text>
             <Text style={[styles.transactionAmountText, { color: (transactionType === 'Income') ? colors.green : colors.red }]}>RM {transactionAmount}</Text>
             <Text style={styles.transactionDescText}>{transactionDesc}</Text>
-            <Text style={styles.transactionDateText}>{transactionType} added on {moment(transactionDate, "DD-MM-YYYY").format("DD MMMM YYYY")}</Text>
+            <Text style={styles.transactionDateText}><Text style={{ color: colors.green, fontWeight: 'bold' }}>{transactionType}</Text> added on <Text style={{ fontWeight: 'bold' }}>{moment(transactionDate).format("DD MMMM YYYY")}</Text></Text>
         </TouchableOpacity>
     );
 }

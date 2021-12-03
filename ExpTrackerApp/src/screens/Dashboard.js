@@ -109,7 +109,7 @@ function Dashboard(props) {
                 </View>
 
                 <Animation source={menuAnimation} loop={true} autoPlay={true} style={{ position: 'absolute', width: windowHeight - 400, bottom: 0, alignSelf: 'center' }} />
-
+                <Text style={{ fontSize: 10, alignSelf: 'center', position: 'absolute', bottom: 30, }}>Expense Tracker v1.0</Text>
             </RNModal>
             {/* Menu Modal End */}
 
