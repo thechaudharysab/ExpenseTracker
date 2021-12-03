@@ -1,19 +1,28 @@
-import React, { useCallback, useState } from 'react';
-import { ScrollView, Text, StyleSheet, TouchableOpacity, Image, View, } from 'react-native';
+import React, { useCallback, useRef } from 'react';
+import { ScrollView, Text, StyleSheet, TouchableOpacity, Image, View, Dimensions } from 'react-native';
 import { useFocusEffect } from "@react-navigation/native";
 import Animation from 'lottie-react-native';
+import RNModal from "react-native-modalbox";
 
+import menuAnimation from '../assets/animations/financial-characters-consulting-each-other.json';
 import { SPACING } from '../utils/constants';
 import colors from '../utils/colors';
+import TransactionCell from '../components/TransactionCell';
 
 function Dashboard({ navigation }) {
+
+    const menuRef = useRef();
+    const windowHeight = Dimensions.get('window').height;
 
     useFocusEffect(
         useCallback(() => {
             navigation.setOptions({
                 headerLeft: null,
                 headerTintColor: colors.secondaryDarkBlue,
-                headerRight: () => <TouchableOpacity onPress={() => { navigation.navigate("Add Edit Transaction") }} style={styles.navButonStyle}>
+                headerLeft: () => <TouchableOpacity onPress={() => { menuRef.current.open(); }} style={[styles.navButonStyle, { marginLeft: SPACING.MEDIUM, }]}>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.primaryBlue }}>☰</Text>
+                </TouchableOpacity>,
+                headerRight: () => <TouchableOpacity onPress={() => { navigation.navigate("Add Edit Transaction") }} style={[styles.navButonStyle, { marginRight: SPACING.MEDIUM, }]}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.primaryBlue }}>+</Text>
                 </TouchableOpacity>,
                 headerStyle: {
@@ -33,7 +42,7 @@ function Dashboard({ navigation }) {
             {/* User Card */}
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: SPACING.LARGE, marginBottom: SPACING.LARGE }}>
                 <Text style={{ textAlign: 'center', fontSize: 12 }}>Balance</Text>
-                <Text style={{ fontSize: 24, fontWeight: '200', textAlign: 'center' }}>$ 00.00</Text>
+                <Text style={{ fontSize: 24, fontWeight: '200', textAlign: 'center' }}>RM 00.00</Text>
             </View>
 
             <ScrollView contentContainerStyle={styles.container}>
@@ -43,29 +52,55 @@ function Dashboard({ navigation }) {
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ marginTop: SPACING.MEDIUM, marginBottom: SPACING.SMALL }}>Your Transactions</Text>
-                        <Text style={{ marginTop: SPACING.MEDIUM, marginBottom: SPACING.SMALL, color: colors.primaryBlue, fontWeight: 'bold' }}>ⓘ</Text>
+                        <TouchableOpacity style={{ paddingLeft: 20, alignSelf: 'flex-end' }} onPress={() => {
+                            alert("Search is not available in this version")
+                        }}>
+                            <Text style={{ marginTop: SPACING.MEDIUM, marginBottom: SPACING.SMALL, color: colors.primaryBlue, fontWeight: 'bold' }}>🔍</Text>
+                        </TouchableOpacity>
+
                     </View>
 
+                    <TransactionCell transactionType={'Expense'} transactionAmount={'29.30'}
+                        transactionTitle={'Bought Snacks from DayToDay Mart'} transactionDesc={'For the movie night at home.'}
+                        transactionDate={'3-12-2021'} />
 
-                    <TouchableOpacity style={styles.transactionCard}>
-                        <Text>Transaction Name</Text>
+                    <TransactionCell transactionType={'Income'} transactionAmount={'5000'}
+                        transactionTitle={'Salary Tranfer'} transactionDesc={'Salary for Dec 2021'}
+                        transactionDate={'1-12-2021'} />
+
+                </View>
+
+            </ScrollView>
+
+            <RNModal ref={menuRef} position={'bottom'} swipeArea={20} coverScreen={true}
+                style={{ backgroundColor: colors.yellow, borderTopStartRadius: 25, borderTopRightRadius: 25, padding: 10, height: windowHeight - 350 }}>
+                <Text style={{ alignSelf: 'center', margin: 10, fontWeight: 'bold' }}>Menu</Text>
+
+                <View style={{ flexDirection: 'row', flexShrink: 1, flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: SPACING.MEDIUM }}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => {
+                        menuRef.current.close();
+                        navigation.navigate("Add Edit Transaction")
+                    }}>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Add New</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.transactionCard}>
-                        <Text>Transaction Name</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>About</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.transactionCard}>
-                        <Text>Transaction Name</Text>
+                    <TouchableOpacity style={styles.menuItem}>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Github</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.transactionCard}>
-                        <Text>Transaction Name</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.transactionCard}>
-                        <Text>Transaction Name</Text>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => {
+                        menuRef.current.close();
+                        navigation.navigate("Login")
+                    }}>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Logout</Text>
                     </TouchableOpacity>
                 </View>
 
+                <Animation source={menuAnimation} loop={true} autoPlay={true} style={{ position: 'absolute', width: windowHeight - 400, bottom: 0, alignSelf: 'center' }} />
 
-            </ScrollView>
+            </RNModal>
+
         </View>
 
     );
@@ -74,10 +109,10 @@ function Dashboard({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.lightGrayWhite,
+        flexGrow: 1
         // padding: SPACING.LARGE,
     },
     navButonStyle: {
-        marginRight: SPACING.MEDIUM,
         backgroundColor: colors.white,
         height: 30,
         width: 30,
@@ -97,25 +132,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: SPACING.MEDIUM
     },
-    transactionCard: {
-        backgroundColor: colors.lightGrayWhite,
-        padding: SPACING.SMALL,
-        borderRadius: 8,
-        marginTop: SPACING.SMALL,
-        marginBottom: SPACING.SMALL,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 0,
-        },
-        shadowOpacity: 0.12,
-        shadowRadius: 2.22,
-        elevation: 3,
-    },
-    animationStyle: {
-        height: 100,
-        margin: SPACING.SMALL
-    },
     transactionsView: {
         flex: 1,
         backgroundColor: colors.white,
@@ -129,6 +145,25 @@ const styles = StyleSheet.create({
             height: 0,
         },
         shadowOpacity: 0.12,
+        shadowRadius: 2.22,
+        elevation: 3,
+    },
+    menuItem: {
+        backgroundColor: colors.white,
+        padding: SPACING.SMALL,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 80,
+        height: 80,
+        borderRadius: 8,
+        marginRight: SPACING.SMALL,
+        marginBottom: SPACING.SMALL,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 0,
+        },
+        shadowOpacity: 0.22,
         shadowRadius: 2.22,
         elevation: 3,
     }
