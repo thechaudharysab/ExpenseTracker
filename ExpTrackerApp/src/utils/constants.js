@@ -1,11 +1,9 @@
 import { StyleSheet } from "react-native";
 import colors from "./colors";
 
-// export const TEXT_SIZE = {
-//     MD: 16,
-//     SM: 12,
-//     ES: 10
-// }
+export const SERVICE_URLS = {
+    API_URL: 'http://localhost:3000/api'
+}
 
 export const SPACING = {
     LARGE: 24,

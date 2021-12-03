@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useContext } from 'react';
-import { ScrollView, Text, StyleSheet, TouchableOpacity, Image, View, Dimensions } from 'react-native';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
+import { ScrollView, Text, StyleSheet, TouchableOpacity, Image, View, Dimensions, Alert } from 'react-native';
 import { useFocusEffect } from "@react-navigation/native";
 import Animation from 'lottie-react-native';
 import RNModal from "react-native-modalbox";
@@ -9,10 +9,14 @@ import { SPACING } from '../utils/constants';
 import colors from '../utils/colors';
 import TransactionCell from '../components/TransactionCell';
 
+import transactionServices from '../utils/services/transactionServices';
+
 function Dashboard(props) {
 
     const menuRef = useRef();
     const windowHeight = Dimensions.get('window').height;
+
+    const [transactions, setTransactions] = useState([]);
 
     useFocusEffect(
         useCallback(() => {
@@ -35,6 +39,14 @@ function Dashboard(props) {
             });
         }, [props.navigation])
     );
+
+    useEffect(() => {
+        transactionServices.getAllTransactions().then((allTransactions) => {
+            setTransactions(allTransactions)
+        }).catch((error) => {
+            Alert.alert("Error", error)
+        })
+    }, [])
 
     return (
         <View style={{ flex: 2, backgroundColor: colors.lightGrayWhite, }}>
@@ -60,18 +72,17 @@ function Dashboard(props) {
 
                     </View>
 
-                    <TransactionCell transactionType={'Expense'} transactionAmount={'29.30'}
-                        transactionTitle={'Bought Snacks from DayToDay Mart'} transactionDesc={'For the movie night at home.'}
-                        transactionDate={'3-12-2021'} />
-
-                    <TransactionCell transactionType={'Income'} transactionAmount={'5000'}
-                        transactionTitle={'Salary Tranfer'} transactionDesc={'Salary for Dec 2021'}
-                        transactionDate={'1-12-2021'} />
+                    {transactions.map((transaction, index) => (
+                        <TransactionCell key={index} transactionType={transaction.TransactionType} transactionAmount={transaction.TransactionAmount}
+                            transactionTitle={transaction.TransactionTitle} transactionDesc={transaction.TransactionDescription}
+                            transactionDate={transaction.TransactionDate} />
+                    ))}
 
                 </View>
 
             </ScrollView>
 
+            {/* Menu Modal Start */}
             <RNModal ref={menuRef} position={'bottom'} swipeArea={20} coverScreen={true}
                 style={{ backgroundColor: colors.yellow, borderTopStartRadius: 25, borderTopRightRadius: 25, padding: 10, height: windowHeight - 350 }}>
                 <Text style={{ alignSelf: 'center', margin: 10, fontWeight: 'bold' }}>Menu</Text>
@@ -100,6 +111,7 @@ function Dashboard(props) {
                 <Animation source={menuAnimation} loop={true} autoPlay={true} style={{ position: 'absolute', width: windowHeight - 400, bottom: 0, alignSelf: 'center' }} />
 
             </RNModal>
+            {/* Menu Modal End */}
 
         </View>
 
