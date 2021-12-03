@@ -63,7 +63,7 @@ function Dashboard(props) {
                 setTransactions(allTransactions)
 
             }).catch((error) => {
-                Alert.alert("Error", JSON.stringify(error))
+                Alert.alert("Error", error.message)
             })
         }
     }, [props.navigation, isFocused, deleteTransaction])
@@ -73,7 +73,7 @@ function Dashboard(props) {
             Alert.alert("Success", "The transaction was successfully deleted");
             setBalance(0.00)
         }).catch((error) => {
-            Alert.alert("Error", "Unable to delete transaction. " + error)
+            Alert.alert("Error", "Unable to delete transaction. " + error.message)
         })
     }
 

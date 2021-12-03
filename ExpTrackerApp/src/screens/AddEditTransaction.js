@@ -69,7 +69,7 @@ function AddEditTransaction(props) {
                 Alert.alert("Success", `${transactionType} Transaction has been successfully added.`)
                 props.navigation.popToTop();
             }).catch((error) => {
-                Alert.alert("Error", JSON.stringify(error))
+                Alert.alert("Error", error.message)
             })
 
         }
