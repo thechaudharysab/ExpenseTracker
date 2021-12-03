@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 import { SPACING } from '../utils/constants';
+import Divider from '../components/Divider';
 import colors from '../utils/colors';
 import moment from 'moment';
 
@@ -11,7 +12,8 @@ function TransactionCell({ transactionType, transactionAmount, transactionTitle,
             <Text style={styles.transactionTitleText}>{transactionTitle}</Text>
             <Text style={[styles.transactionAmountText, { color: (transactionType === 'Income') ? colors.green : colors.red }]}>RM {transactionAmount}</Text>
             <Text style={styles.transactionDescText}>{transactionDesc}</Text>
-            <Text style={styles.transactionDateText}><Text style={{ color: colors.green, fontWeight: 'bold' }}>{transactionType}</Text> added on <Text style={{ fontWeight: 'bold' }}>{moment(transactionDate).format("DD MMMM YYYY")}</Text></Text>
+            <Divider topMarginValue={SPACING.SMALL} bottomMarginValue={SPACING.SMALL} />
+            <Text style={styles.transactionDateText}><Text style={{ color: (transactionType === 'Income') ? colors.green : colors.red, fontWeight: 'bold' }}>{transactionType}</Text> added on <Text style={{ fontWeight: 'bold' }}>{moment(transactionDate).format("DD MMMM YYYY")}</Text></Text>
         </TouchableOpacity>
     );
 }

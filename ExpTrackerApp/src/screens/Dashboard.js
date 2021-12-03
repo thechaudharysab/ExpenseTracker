@@ -90,7 +90,7 @@ function Dashboard(props) {
                 <View style={{ flexDirection: 'row', flexShrink: 1, flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', marginTop: SPACING.MEDIUM }}>
                     <TouchableOpacity style={styles.menuItem} onPress={() => {
                         menuRef.current.close();
-                        navigation.navigate("Add Edit Transaction")
+                        props.navigation.navigate("Add Edit Transaction")
                     }}>
                         <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Add New</Text>
                     </TouchableOpacity>
@@ -102,7 +102,7 @@ function Dashboard(props) {
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem} onPress={() => {
                         menuRef.current.close();
-                        navigation.navigate("Login")
+                        props.navigation.navigate("Login")
                     }}>
                         <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Logout</Text>
                     </TouchableOpacity>

@@ -78,7 +78,7 @@ function Login(props) {
                 </View>
 
                 <TouchableOpacity onPress={() => {
-                    navigation.navigate("Dashboard")
+                    props.navigation.navigate("Dashboard")
                 }}>
                     <Text style={{ alignSelf: 'center', textDecorationLine: 'underline' }}>Skip Login</Text>
                 </TouchableOpacity>
