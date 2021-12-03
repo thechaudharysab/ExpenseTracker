@@ -100,7 +100,7 @@ function Dashboard(props) {
                         </TouchableOpacity>
 
                     </View>
-
+                    {transactions.length <= 0 && <Text>There have no transactions that we can load at this time.</Text>}
                     {transactions.map((transaction, index) => (
                         <TransactionCell key={index} transactionType={transaction.TransactionType} transactionAmount={transaction.TransactionAmount}
                             transactionTitle={transaction.TransactionTitle} transactionDesc={transaction.TransactionDescription}
