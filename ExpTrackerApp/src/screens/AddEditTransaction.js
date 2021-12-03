@@ -10,11 +10,11 @@ import colors from '../utils/colors';
 import SegSelector from '../components/SegSelector';
 import MainActionButton from '../components/MainActionButton';
 
-function AddEditTransaction({ navigation }) {
+function AddEditTransaction(props) {
 
     useFocusEffect(
         useCallback(() => {
-            navigation.setOptions({
+            props.navigation.setOptions({
                 headerTintColor: colors.secondaryDarkBlue,
                 title: "Add New Transaction",
                 headerStyle: {
@@ -25,7 +25,7 @@ function AddEditTransaction({ navigation }) {
                     },
                 },
             });
-        }, [navigation])
+        }, [props.navigation])
     );
 
     const windowHeight = Dimensions.get('window').height;

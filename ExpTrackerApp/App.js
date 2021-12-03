@@ -1,6 +1,4 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, useColorScheme, View, } from 'react-native';
-
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './src/screens/Login';
@@ -31,7 +29,6 @@ function App(props) {
       <Stack.Navigator>
         <Stack.Screen name="Dashboard" component={Dashboard} options={defaultNavOptios} />
         <Stack.Screen name="Add Edit Transaction" component={AddEditTransaction} options={defaultNavOptios} />
-
         <Stack.Screen name="Login" component={Login} options={defaultNavOptios} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useRef, useContext } from 'react';
 import { ScrollView, Text, StyleSheet, TouchableOpacity, Image, View, Dimensions } from 'react-native';
 import { useFocusEffect } from "@react-navigation/native";
 import Animation from 'lottie-react-native';
@@ -9,20 +9,20 @@ import { SPACING } from '../utils/constants';
 import colors from '../utils/colors';
 import TransactionCell from '../components/TransactionCell';
 
-function Dashboard({ navigation }) {
+function Dashboard(props) {
 
     const menuRef = useRef();
     const windowHeight = Dimensions.get('window').height;
 
     useFocusEffect(
         useCallback(() => {
-            navigation.setOptions({
+            props.navigation.setOptions({
                 headerLeft: null,
                 headerTintColor: colors.secondaryDarkBlue,
                 headerLeft: () => <TouchableOpacity onPress={() => { menuRef.current.open(); }} style={[styles.navButonStyle, { marginLeft: SPACING.MEDIUM, }]}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.primaryBlue }}>☰</Text>
                 </TouchableOpacity>,
-                headerRight: () => <TouchableOpacity onPress={() => { navigation.navigate("Add Edit Transaction") }} style={[styles.navButonStyle, { marginRight: SPACING.MEDIUM, }]}>
+                headerRight: () => <TouchableOpacity onPress={() => { props.navigation.navigate("Add Edit Transaction") }} style={[styles.navButonStyle, { marginRight: SPACING.MEDIUM, }]}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold', color: colors.primaryBlue }}>+</Text>
                 </TouchableOpacity>,
                 headerStyle: {
@@ -33,7 +33,7 @@ function Dashboard({ navigation }) {
                     },
                 },
             });
-        }, [navigation])
+        }, [props.navigation])
     );
 
     return (

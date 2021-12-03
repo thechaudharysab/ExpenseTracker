@@ -12,7 +12,7 @@ import MainActionButton from '../components/MainActionButton';
 import Divider from '../components/Divider';
 import SecondaryActionButton from '../components/SecondaryActionButton';
 
-function Login({ navigation }) {
+function Login(props) {
 
     const windowWidth = Dimensions.get('window').width;
 
@@ -23,14 +23,14 @@ function Login({ navigation }) {
 
     useFocusEffect(
         useCallback(() => {
-            navigation.setOptions({ headerShown: false });
-        }, [navigation])
+            props.navigation.setOptions({ headerShown: false });
+        }, [props.navigation])
     );
 
     function checkLogin() {
         if (email === 'test@domain.com' && password === '12345678') {
             //Goto dashboard
-            navigation.navigate("Dashboard")
+            props.navigation.navigate("Dashboard")
         } else {
             Alert.alert("Invalid Login Information", "The login information is invalid or not found. Please correct the information and try again.")
         }
