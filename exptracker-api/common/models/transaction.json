@@ -1,0 +1,48 @@
+{
+  "name": "transaction",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "TransactionType": {
+      "type": "string",
+      "required": true
+    },
+    "TransactionCurrency": {
+      "type": "string",
+      "required": true,
+      "default": "RM"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "required": true,
+      "default": 0
+    },
+    "TransactionTitle": {
+      "type": "string",
+      "required": true,
+      "default": "No Title Provided"
+    },
+    "TransactionDescription": {
+      "type": "string"
+    },
+    "TransactionDate": {
+      "type": "date",
+      "required": true
+    },
+    "TransactionDateAdded": {
+      "type": "date",
+      "required": true
+    },
+    "TransactionDateModified": {
+      "type": "date",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
