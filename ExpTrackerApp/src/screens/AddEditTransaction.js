@@ -9,6 +9,9 @@ import { SPACING, COMMON_STYLES } from '../utils/constants';
 import colors from '../utils/colors';
 import SegSelector from '../components/SegSelector';
 import MainActionButton from '../components/MainActionButton';
+import moment from 'moment';
+
+import transactionServices from '../utils/services/transactionServices';
 
 function AddEditTransaction(props) {
 
@@ -44,11 +47,44 @@ function AddEditTransaction(props) {
         setTransactionType(tabOptions[index]);
     }
 
+    function submitPressed() {
+
+        if (transactionAmount === "") {
+            Alert.alert("Error", "Amount is required")
+        } else if (transactionTitle === "") {
+            Alert.alert("Error", "Transaction title is required")
+        } else {
+            let tObject = {
+                "TransactionType": transactionType,
+                "TransactionCurrency": "RM",
+                "TransactionAmount": parseFloat(transactionAmount),
+                "TransactionTitle": transactionTitle,
+                "TransactionDescription": transactionDesc,
+                "TransactionDate": moment(transactionDate).format("YYYY-MM-DDTHH:mm:ssZ"),
+                "TransactionDateAdded": moment(new Date()).format("YYYY-MM-DDTHH:mm:ssZ"),
+                "TransactionDateModified": moment(new Date()).format("YYYY-MM-DDTHH:mm:ssZ")
+            }
+
+            transactionServices.postNewTransaction(tObject).then(() => {
+                Alert.alert("Success", `${transactionType} Transaction has been successfully added.`)
+                props.navigation.popToTop();
+            }).catch((error) => {
+                Alert.alert("Error", JSON.stringify(error))
+            })
+
+        }
+    }
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
             <KeyboardAvoidingView>
                 <Text style={COMMON_STYLES.textInputLabel}>Selected Transaction Type: <Text style={{ fontWeight: 'bold', color: colors.primaryBlue }}>{transactionType}</Text></Text>
                 <SegSelector options={tabOptions} selectedIndex={0} updatedTabAction={(selectedIndex) => tabUpdated(selectedIndex)} />
+
+                <Text style={COMMON_STYLES.textInputLabel}>{transactionType} Title *</Text>
+                <TextInput placeholder={'e.g. Lunch at Nandos'} value={transactionTitle}
+                    style={COMMON_STYLES.textFieldActive}
+                    onChangeText={(t) => setTransactionTitle(t)} />
 
                 <Text style={COMMON_STYLES.textInputLabel}>Amount *</Text>
                 <View style={[COMMON_STYLES.textFieldActive, { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }]}>
@@ -57,11 +93,6 @@ function AddEditTransaction(props) {
                         keyboardType={'decimal-pad'} onChangeText={(a) => setTransactionAmount(a)} />
                 </View>
 
-                <Text style={COMMON_STYLES.textInputLabel}>Transaction Title *</Text>
-                <TextInput placeholder={'e.g. Lunch at Nandos'} value={transactionTitle}
-                    style={COMMON_STYLES.textFieldActive}
-                    onChangeText={(t) => setTransactionTitle(t)} />
-
                 <Text style={COMMON_STYLES.textInputLabel}>Description</Text>
                 <TextInput placeholder={' '} value={transactionDesc} multiline={true}
                     style={[COMMON_STYLES.textFieldActive, { height: COMMON_STYLES.textFieldActive.height + 40 }]}
@@ -69,8 +100,8 @@ function AddEditTransaction(props) {
 
                 <Text style={COMMON_STYLES.textInputLabel}>Transaction Date *</Text>
                 <TextInput style={COMMON_STYLES.textFieldActive} placeholder={'DD-MM-YYYY'} onFocus={() => { Keyboard.dismiss(); transactionDateRef.current.open(); }}
-                    value={`${transactionDate.getDate()}-${transactionDate.getMonth() + 1}-${transactionDate.getFullYear()}`} isEditable={false} />
-
+                    value={`${moment(transactionDate).format("DD MMMM YYYY")}`} isEditable={false} />
+                {/* ${transactionDate.getDate()} ${transactionDate.getMonth() + 1} ${transactionDate.getFullYear()} */}
                 <RNModal ref={transactionDateRef} position={'bottom'} swipeArea={20} coverScreen={true}
                     style={{ backgroundColor: '#fff', borderTopStartRadius: 25, borderTopRightRadius: 25, padding: 10, height: windowHeight * 0.32 }}>
                     <Text style={{ alignSelf: 'center', margin: 10, fontWeight: 'bold' }}>Select Transaction Date</Text>
@@ -86,7 +117,7 @@ function AddEditTransaction(props) {
                 </RNModal>
             </KeyboardAvoidingView>
             <MainActionButton title={"Add Transaction"} pressEvent={() => {
-                alert("COming son")
+                submitPressed();
             }} />
 
         </ScrollView>

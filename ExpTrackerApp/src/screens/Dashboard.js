@@ -1,8 +1,9 @@
 import React, { useCallback, useRef, useEffect, useState } from 'react';
-import { ScrollView, Text, StyleSheet, TouchableOpacity, Image, View, Dimensions, Alert } from 'react-native';
+import { ScrollView, Text, StyleSheet, TouchableOpacity, Linking, View, Dimensions, Alert } from 'react-native';
 import { useFocusEffect } from "@react-navigation/native";
 import Animation from 'lottie-react-native';
 import RNModal from "react-native-modalbox";
+import { useIsFocused } from "@react-navigation/native";
 
 import menuAnimation from '../assets/animations/financial-characters-consulting-each-other.json';
 import { SPACING } from '../utils/constants';
@@ -15,8 +16,10 @@ function Dashboard(props) {
 
     const menuRef = useRef();
     const windowHeight = Dimensions.get('window').height;
+    const isFocused = useIsFocused();
 
     const [transactions, setTransactions] = useState([]);
+    const [balance, setBalance] = useState(0.00);
 
     useFocusEffect(
         useCallback(() => {
@@ -41,12 +44,38 @@ function Dashboard(props) {
     );
 
     useEffect(() => {
-        transactionServices.getAllTransactions().then((allTransactions) => {
-            setTransactions(allTransactions)
+        if (isFocused) {
+            transactionServices.getAllTransactions().then((allTransactions) => {
+
+                //Sorting by TransactionDate
+                allTransactions.sort(function (firstTempDate, secondTempDate) {
+                    if (firstTempDate.TransactionDate > secondTempDate.TransactionDate) return -1;
+                    if (firstTempDate.TransactionDate < secondTempDate.TransactionDate) return 1;
+                })
+
+                // Sum of all transactions
+                let sum = 0;
+                allTransactions.forEach(transaction => {
+                    (transaction.TransactionType === "Income") ? sum += transaction.TransactionAmount : sum -= transaction.TransactionAmount
+                })
+
+                setBalance(sum)
+                setTransactions(allTransactions)
+
+            }).catch((error) => {
+                Alert.alert("Error", JSON.stringify(error))
+            })
+        }
+    }, [props.navigation, isFocused, deleteTransaction])
+
+    function deleteTransaction(transactionId) {
+        transactionServices.deleteTransaction(transactionId).then(() => {
+            Alert.alert("Success", "The transaction was successfully deleted");
+            setBalance(0.00)
         }).catch((error) => {
-            Alert.alert("Error", error)
+            Alert.alert("Error", "Unable to delete transaction. " + error)
         })
-    }, [])
+    }
 
     return (
         <View style={{ flex: 2, backgroundColor: colors.lightGrayWhite, }}>
@@ -54,10 +83,10 @@ function Dashboard(props) {
             {/* User Card */}
             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: SPACING.LARGE, marginBottom: SPACING.LARGE }}>
                 <Text style={{ textAlign: 'center', fontSize: 12 }}>Balance</Text>
-                <Text style={{ fontSize: 24, fontWeight: '200', textAlign: 'center' }}>RM 00.00</Text>
+                <Text style={{ fontSize: 24, fontWeight: '200', textAlign: 'center' }}>RM {balance}</Text>
             </View>
 
-            <ScrollView contentContainerStyle={styles.container}>
+            <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={true}>
 
                 {/* Transactions */}
                 <View style={styles.transactionsView}>
@@ -75,9 +104,9 @@ function Dashboard(props) {
                     {transactions.map((transaction, index) => (
                         <TransactionCell key={index} transactionType={transaction.TransactionType} transactionAmount={transaction.TransactionAmount}
                             transactionTitle={transaction.TransactionTitle} transactionDesc={transaction.TransactionDescription}
-                            transactionDate={transaction.TransactionDate} />
+                            transactionDate={transaction.TransactionDate} transactionId={transaction.id} deleteActionPressed={() => deleteTransaction(transaction.id)} />
                     ))}
-
+                    <View style={{ height: 40 }} />
                 </View>
 
             </ScrollView>
@@ -94,10 +123,14 @@ function Dashboard(props) {
                     }}>
                         <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Add New</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}>
-                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>About</Text>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => {
+                        Linking.openURL("https://github.com/thechaudharysab/ExpenseTracker/blob/main/README.md");
+                    }}>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>ReadMe</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => {
+                        Linking.openURL("https://github.com/thechaudharysab/ExpenseTracker");
+                    }}>
                         <Text style={{ textAlign: 'center', fontWeight: 'bold' }}>Github</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.menuItem} onPress={() => {

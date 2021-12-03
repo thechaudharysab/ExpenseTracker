@@ -18,14 +18,14 @@ function postNewTransaction(trasactionData) {
 
     let url = SERVICE_URLS.API_URL + '/transactions'
     let data = {
-        "TransactionType": "Income",
-        "TransactionCurrency": "RM",
-        "TransactionAmount": 29.22,
-        "TransactionTitle": "Demo Title coming from API",
-        "TransactionDescription": "Demo Desc coming from the API",
-        "TransactionDate": "2021-12-03T11:20:20.602Z",
-        "TransactionDateAdded": "2021-12-03T11:20:20.602Z",
-        "TransactionDateModified": "2021-12-03T11:20:20.602Z"
+        "TransactionType": trasactionData.TransactionType,
+        "TransactionCurrency": trasactionData.TransactionCurrency,
+        "TransactionAmount": trasactionData.TransactionAmount,
+        "TransactionTitle": trasactionData.TransactionTitle,
+        "TransactionDescription": trasactionData.TransactionDescription,
+        "TransactionDate": trasactionData.TransactionDate,
+        "TransactionDateAdded": trasactionData.TransactionDateAdded,
+        "TransactionDateModified": trasactionData.TransactionDateModified
     }
 
     return new Promise((resolve, reject) => {
@@ -38,7 +38,22 @@ function postNewTransaction(trasactionData) {
 
 }
 
+function deleteTransaction(transactionId) {
+
+    let url = SERVICE_URLS.API_URL + '/transactions/' + transactionId
+
+    return new Promise((resolve, reject) => {
+        axios.delete(url).then((tPostResponse) => {
+            resolve(tPostResponse.data);
+        }).catch((error) => {
+            reject(error);
+        })
+    })
+
+}
+
 export default {
     getAllTransactions,
     postNewTransaction,
+    deleteTransaction
 };
