@@ -14,6 +14,8 @@
 		183CBEF68E4663E2E4E168B9 /* libPods-ExpTrackerApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 742F99B24A169FF4282B92F4 /* libPods-ExpTrackerApp.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		D1287F2AE58A6CB92D082F7E /* libPods-ExpTrackerApp-ExpTrackerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AF0B1DD63B21201446DBA22 /* libPods-ExpTrackerApp-ExpTrackerAppTests.a */; };
+		EE3A453A2759B7960023DB5F /* liblottie-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE3A45382759B7960023DB5F /* liblottie-ios.a */; };
+		EE3A453B2759B7960023DB5F /* liblottie-react-native.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE3A45392759B7960023DB5F /* liblottie-react-native.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +46,8 @@
 		742F99B24A169FF4282B92F4 /* libPods-ExpTrackerApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExpTrackerApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ExpTrackerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EE3A45382759B7960023DB5F /* liblottie-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "liblottie-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE3A45392759B7960023DB5F /* liblottie-react-native.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "liblottie-react-native.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +63,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE3A453B2759B7960023DB5F /* liblottie-react-native.a in Frameworks */,
+				EE3A453A2759B7960023DB5F /* liblottie-ios.a in Frameworks */,
 				183CBEF68E4663E2E4E168B9 /* libPods-ExpTrackerApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -91,7 +97,6 @@
 				53E943A5C166EF58E8E04372 /* Pods-ExpTrackerApp-ExpTrackerAppTests.debug.xcconfig */,
 				555958ED93635441D8BCEF30 /* Pods-ExpTrackerApp-ExpTrackerAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -111,6 +116,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EE3A45382759B7960023DB5F /* liblottie-ios.a */,
+				EE3A45392759B7960023DB5F /* liblottie-react-native.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				742F99B24A169FF4282B92F4 /* libPods-ExpTrackerApp.a */,
 				2AF0B1DD63B21201446DBA22 /* libPods-ExpTrackerApp-ExpTrackerAppTests.a */,
@@ -485,6 +492,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 42CEU248HH;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = ExpTrackerApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -496,7 +504,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibjects.ExpenseTracker;
 				PRODUCT_NAME = ExpTrackerApp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -511,6 +519,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 42CEU248HH;
 				INFOPLIST_FILE = ExpTrackerApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -521,7 +530,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ibjects.ExpenseTracker;
 				PRODUCT_NAME = ExpTrackerApp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
